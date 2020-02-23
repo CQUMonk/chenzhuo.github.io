@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JavaScript 异步编程 | Giraffe&#39;s Blog</title>
+    <meta name="description" content=" ">
+    <link rel="icon short" href="/ico_avatar.ico" type="image/x-icon">
+    
+    <link rel="preload" href="/assets/css/0.styles.2fd78da2.css" as="style"><link rel="preload" href="/assets/js/app.36f7a4d5.js" as="script"><link rel="preload" href="/assets/js/3.5e56f3a6.js" as="script"><link rel="preload" href="/assets/js/2.a56e4763.js" as="script"><link rel="preload" href="/assets/js/11.171a332b.js" as="script"><link rel="prefetch" href="/assets/js/10.d856c855.js"><link rel="prefetch" href="/assets/js/12.34e00da0.js"><link rel="prefetch" href="/assets/js/13.6a4bbdce.js"><link rel="prefetch" href="/assets/js/14.4eef22e3.js"><link rel="prefetch" href="/assets/js/15.80d8c8f1.js"><link rel="prefetch" href="/assets/js/16.408ca987.js"><link rel="prefetch" href="/assets/js/17.267749f1.js"><link rel="prefetch" href="/assets/js/18.be1ceda1.js"><link rel="prefetch" href="/assets/js/19.d6d6110b.js"><link rel="prefetch" href="/assets/js/20.c63fb21f.js"><link rel="prefetch" href="/assets/js/21.a8cdd90b.js"><link rel="prefetch" href="/assets/js/22.e6989c2d.js"><link rel="prefetch" href="/assets/js/23.6efb0d64.js"><link rel="prefetch" href="/assets/js/24.225dff0d.js"><link rel="prefetch" href="/assets/js/25.d6301564.js"><link rel="prefetch" href="/assets/js/26.48130fde.js"><link rel="prefetch" href="/assets/js/27.b4f579f9.js"><link rel="prefetch" href="/assets/js/28.d4af6c44.js"><link rel="prefetch" href="/assets/js/29.4dbe3fbe.js"><link rel="prefetch" href="/assets/js/30.d9c89cfb.js"><link rel="prefetch" href="/assets/js/31.314c8ce0.js"><link rel="prefetch" href="/assets/js/32.9ec8b6ed.js"><link rel="prefetch" href="/assets/js/33.668a40d2.js"><link rel="prefetch" href="/assets/js/34.746f8d03.js"><link rel="prefetch" href="/assets/js/35.84de9a82.js"><link rel="prefetch" href="/assets/js/36.a243395d.js"><link rel="prefetch" href="/assets/js/37.a9ff6e8c.js"><link rel="prefetch" href="/assets/js/38.1c3e1cdf.js"><link rel="prefetch" href="/assets/js/39.718c02a7.js"><link rel="prefetch" href="/assets/js/4.21f7bc64.js"><link rel="prefetch" href="/assets/js/40.640dda28.js"><link rel="prefetch" href="/assets/js/41.b05559b1.js"><link rel="prefetch" href="/assets/js/42.32bc5efc.js"><link rel="prefetch" href="/assets/js/43.d6325d70.js"><link rel="prefetch" href="/assets/js/44.4897fa11.js"><link rel="prefetch" href="/assets/js/45.cc5207d2.js"><link rel="prefetch" href="/assets/js/46.ccff6404.js"><link rel="prefetch" href="/assets/js/5.e8e54c08.js"><link rel="prefetch" href="/assets/js/6.567c728a.js"><link rel="prefetch" href="/assets/js/7.efc9b48d.js"><link rel="prefetch" href="/assets/js/8.2d41cbc0.js"><link rel="prefetch" href="/assets/js/9.d52aa902.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.2fd78da2.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Giraffe's Blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/reading/" class="nav-link">阅读随笔</a></div><div class="nav-item"><a href="/tech/" class="nav-link router-link-active">技术思考</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/reading/" class="nav-link">阅读随笔</a></div><div class="nav-item"><a href="/tech/" class="nav-link router-link-active">技术思考</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="javascript-异步编程"><a href="#javascript-异步编程" aria-hidden="true" class="header-anchor">#</a> JavaScript 异步编程</h1> <p>我们知道，无论是浏览器tab还是nodejs，默认情况下JavaScript通常都运行在一个进程中，
+采用了 单线程+ 事件循环的机制来执行浏览器相关的处理任务（<a href="/tech/js/js-execution.html">JavaScript Event Loop</a>）。</p> <p>程序执行过程中，所产生的处理任务(例如HTML解析， 交互响应等等)，会被依次加入到任务队列中。
+而Event Loop 则负责轮询并从队列中取出一个任务交给 JavaScript Engine执行。</p> <p>JavaScript 的 Event Loop 机制保证了事件任务的按序执行，
+同时，Engine 每次只能执行一个任务，并保证只有在当前任务执行完毕后才会开始执行下一个任务。
+所以任务执行过程中对数据操作不会出现并发问题。</p> <p>然而，采用串行的方式执行任务，会导致当遇到一个任务执行耗时特别长的时候，
+出现用户UI交互相关的任务无法得到及时处理的问题。
+举个<a href="http://rauschma.github.io/async-examples/blocking.html" target="_blank" rel="noopener noreferrer">例子<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>：</p> <div class="language-JS extra-class"><pre class="language-js"><code><span class="token operator">&lt;</span>a id<span class="token operator">=</span><span class="token string">&quot;block&quot;</span> href<span class="token operator">=</span><span class="token string">&quot;&quot;</span><span class="token operator">&gt;</span>Block <span class="token keyword">for</span> <span class="token number">5</span> seconds<span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>p<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>button<span class="token operator">&gt;</span>This is a button<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">&quot;statusMessage&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+    document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'block'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> onClick<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">function</span> <span class="token function">onClick</span><span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        event<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token function">setStatusMessage</span><span class="token punctuation">(</span><span class="token string">'Blocking...'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 模拟一个需要执行5s的耗时任务</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">setStatusMessage</span><span class="token punctuation">(</span><span class="token string">'Done'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">function</span> <span class="token function">setStatusMessage</span><span class="token punctuation">(</span><span class="token parameter">msg</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'statusMessage'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>textContent <span class="token operator">=</span> msg<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">function</span> <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token parameter">milliseconds</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> start <span class="token operator">=</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">&lt;</span> milliseconds<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><p>上面例子中，<code>setTimeout</code>会在任务队列中添加一个任务，sleep模拟了一个5s的耗时操作，
+在这个耗时任务执行完毕之前，用户的交互操作是无法被响应的。</p> <p>为了避免UI响应被阻塞，我们的程序尽量不要在主线程中同步执行耗时操作。
+更好的做法是在主线程中将耗时操作任务交给子线程去异步执行，当任务执行完毕后再通知主线程获取任务结果。</p> <h2 id="callback"><a href="#callback" aria-hidden="true" class="header-anchor">#</a> Callback</h2> <p>在ES6之前，对于异步执行结果的处理方式基本上都是通过注册事件监听（event）或者回调函数来完成的。</p> <p>基本实现思想就是，主线程中发起异步任务的同时，通过回调函数的方式，指定异步任务执行完毕后，需要执行的任务。
+对于结果的处理通常会被封装在一个Callback函数中，当异步任务执行完毕，向事件队列中加入一个新的任务来执行Callback函数。</p> <p>在大多数简单的业务场景下，使用这种方法非常方便，程序可读性也很好。
+然而一旦业务逻辑复杂起来，就会陷入<code>Callback Hell</code>: 程序中回调函数嵌套了回调函数，可维护性骤然下降。
+另外，如果程序还需要考虑到异常和错误的处理问题，使用Callback回调也比较繁琐。
+因为通常无法提供一个通用的异常处理回调，我们不得不去逐一判断异常类型，然后写很多错误处理函数。</p> <div class="tip custom-block"><p>将callback函数作为函数的入参，并在合适的时候回调的编程风格也被称为<code>Continuation-passing style</code>。</p></div> <h2 id="promise"><a href="#promise" aria-hidden="true" class="header-anchor">#</a> Promise</h2> <p>在程序逻辑复杂的情况下，由于函数嵌套层级过深导致程序可读性和可维护性下降，Callback相关的异步结果处理方式不够优雅。
+作为Callback的替代方案，ES6引入的<code>Promise</code>为调用方提供了处理异步操作结果的新姿势。
+(关于如何使用Promise的<a href="http://es6.ruanyifeng.com/#docs/promise" target="_blank" rel="noopener noreferrer">基础知识<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>)</p> <p>在程序控制流中，调用方通常并不关心异步任务的执行过程，而只负责发起任务和获取结果并处理；
+而异步任务则负责执行异步操作，并根据最终不同的结果状态（成功或失败）通知给调用方。</p> <p><code>Promise</code>的基本设计思路就是，使用<code>Promise</code>对象将异步任务部分的处理逻辑和结果封装起来，
+而<code>Promise</code>对象本身作为结果返回给调用方，调用方只需指定不同结果状态（成功或失败）后的处理流程即可。</p> <p>这是一个很常见的“生产者-消费者”场景：<code>Promise</code>负责产出和分发结果（成功或失败），调用方负责处理不同的结果。</p> <div class="language-JS extra-class"><pre class="language-js"><code><span class="token keyword">const</span> promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 异步操作发起</span>
+  <span class="token comment">// 异步操作回调</span>
+  <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token comment">/* 异步操作成功 */</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 分发成功结果</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 分发失败结果</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 调用方</span>
+promise<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token comment">// 处理成功结果</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token parameter">error</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token comment">// 处理失败结果</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><img src="/javascript/js-async/promise-constructor.png" alt=""></p> <p>当我们通过<code>Promise</code>来封装一个异步结果，这意味着<code>Promise</code>对象处于三种状态的一种：</p> <ul><li>Pending: 异步任务还未执行完毕</li> <li>Fulfilled: 异步任务执行成功</li> <li>Rejected: 异步任务执行失败</li></ul> <p>从时序上来讲，当异步任务执行完毕，根据结果的不同，通过调用<code>resolve</code>或<code>reject</code>函数，
+<code>Promise</code>的状态从Pending切换到Fulfilled或Rejected，且这个状态切换是单向不可逆的。</p> <p>一旦状态发生切换，就会通知给调用方（消费者）执行对应的后续操作，因此，这个状态时序的保证是<code>Promise</code>能够处理异步流程的关键。</p> <h3 id="链式调用"><a href="#链式调用" aria-hidden="true" class="header-anchor">#</a> 链式调用</h3> <p><code>then()</code>方法挂载在<code>Promise</code>原型对象上，用来让调用方来指定对于不同状态的返回结果该如何处理：
+<img src="/javascript/js-async/promise-then.png" alt=""></p> <p><code>onFulfilled</code>和<code>onRejectd</code>函数分别处理了<code>fulfilled</code>和<code>rejected</code>两种状态的回调。
+同时，<code>then</code>方法也返回了一个新的promise对象，它可以让调用方使用链式调用的方式继续处理业务逻辑。</p> <p>那这个新的promise对象的状态是什么样的呢？假定promise对象P，它的then方法新返回的promise对象是Q，
+Q的状态由P的<code>onFulfilled</code>和<code>onRejectd</code>函数的执行决定：</p> <div class="language-js extra-class"><pre class="language-js"><code>p<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token keyword">try</span><span class="token punctuation">{</span>
+        <span class="token operator">...</span>
+        <span class="token keyword">return</span> a
+    <span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+         <span class="token keyword">throw</span> c
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token parameter">error</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> b；
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token comment">// val is a or b</span>
+    <span class="token comment">// 捕获onFulfilled和onRejectd的返回结果</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token parameter">error2</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token comment">// error2 is c</span>
+    <span class="token comment">// 捕获onFulfilled和onRejectd执行过程中的异常</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>可以看到，只要是<code>onFulfilled</code>和<code>onRejectd</code>函数正常返回的值（例如a，b）都会被Q的<code>onFulfilled</code>捕获执行；
+如果执行过程中发生了异常，则会被Q的<code>onRejectd</code>捕获到。</p> <p>还有一种情况需要单独拉出来说明一下，如果P的<code>onFulfilled</code>方法中返回了一个promise对象，那么这个promise对象就会被作为then方法的返回对象Q。
+这样的机制有助于把promise的嵌套调用扁平化，避免出现callback那种嵌套地狱。</p> <p>虽然<code>Promise</code>的出现改进了回调的嵌套问题，
+尽管如此，一堆then方法的链式调用仍然显得代码冗余，可读性仍然有待提高。
+使用ES6的Generator + Promise 的方式可以让我们写出更符合直觉的代码逻辑（线性的执行），配合流程管理模块，让代码能够自动地执行。
+而ES7中更是将这一机制变成了async 函数来使用。</p> <h2 id="async-函数"><a href="#async-函数" aria-hidden="true" class="header-anchor">#</a> async 函数</h2> <p>ES7引入的<code>async</code>关键字让我们在异步编程的过程中更加方便的使用<code>Promise</code>,
+它用于将一个函数声明为异步函数，表示当前函数中可能有耗时操作，需要异步执行。</p> <p>async 函数的返回值是一个promise对象，这个对象P在异步函数执行之初就被创建了出来。
+异步函数执行过程中，<code>return</code>和<code>throw</code>操作都会使函数停止执行立即返回：</p> <ul><li>异步函数 return 一个普通值x(非Promise对象)，则异步函数的返回结果为<code>Promise&lt;x&gt;</code>,状态为fulfilled；</li> <li>异步函数 return 一个新的Promise Q， 则异步函数的返回结果为Q；</li> <li>异步函数 throw 一个error 则返回一个状态为rejected的<code>Promise&lt;err&gt;</code></li></ul> <h3 id="await-操作符"><a href="#await-操作符" aria-hidden="true" class="header-anchor">#</a> await 操作符</h3> <p>await 操作符通常会和async函数一起搭配使用，用来同步获取一个Promise对象的执行结果, 它比<code>yeild</code>具有更好的语义。
+由于await 操作会阻塞当前操作，因此必须放在async 函数中使用。</p> <h2 id="总结"><a href="#总结" aria-hidden="true" class="header-anchor">#</a> 总结</h2> <p>我们可以看到，如何解决异步结果分发和处理是JavaScript的异步编程中的核心问题。
+搭配 Promise 与 async 函数 我们不仅可以写出更加符合直觉的代码逻辑，同时还能更优雅地处理异常操作。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <div class="wrapper" data-v-5a084129><h5 data-v-5a084129></h5> <img src="/qrcode_self.jpg" data-v-5a084129></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.36f7a4d5.js" defer></script><script src="/assets/js/3.5e56f3a6.js" defer></script><script src="/assets/js/2.a56e4763.js" defer></script><script src="/assets/js/11.171a332b.js" defer></script>
+  </body>
+</html>

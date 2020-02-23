@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JavaScript 闭包 | Giraffe&#39;s Blog</title>
+    <meta name="description" content=" ">
+    <link rel="icon short" href="/ico_avatar.ico" type="image/x-icon">
+    
+    <link rel="preload" href="/assets/css/0.styles.2fd78da2.css" as="style"><link rel="preload" href="/assets/js/app.36f7a4d5.js" as="script"><link rel="preload" href="/assets/js/3.5e56f3a6.js" as="script"><link rel="preload" href="/assets/js/2.a56e4763.js" as="script"><link rel="preload" href="/assets/js/12.34e00da0.js" as="script"><link rel="prefetch" href="/assets/js/10.d856c855.js"><link rel="prefetch" href="/assets/js/11.171a332b.js"><link rel="prefetch" href="/assets/js/13.6a4bbdce.js"><link rel="prefetch" href="/assets/js/14.4eef22e3.js"><link rel="prefetch" href="/assets/js/15.80d8c8f1.js"><link rel="prefetch" href="/assets/js/16.408ca987.js"><link rel="prefetch" href="/assets/js/17.267749f1.js"><link rel="prefetch" href="/assets/js/18.be1ceda1.js"><link rel="prefetch" href="/assets/js/19.d6d6110b.js"><link rel="prefetch" href="/assets/js/20.c63fb21f.js"><link rel="prefetch" href="/assets/js/21.a8cdd90b.js"><link rel="prefetch" href="/assets/js/22.e6989c2d.js"><link rel="prefetch" href="/assets/js/23.6efb0d64.js"><link rel="prefetch" href="/assets/js/24.225dff0d.js"><link rel="prefetch" href="/assets/js/25.d6301564.js"><link rel="prefetch" href="/assets/js/26.48130fde.js"><link rel="prefetch" href="/assets/js/27.b4f579f9.js"><link rel="prefetch" href="/assets/js/28.d4af6c44.js"><link rel="prefetch" href="/assets/js/29.4dbe3fbe.js"><link rel="prefetch" href="/assets/js/30.d9c89cfb.js"><link rel="prefetch" href="/assets/js/31.314c8ce0.js"><link rel="prefetch" href="/assets/js/32.9ec8b6ed.js"><link rel="prefetch" href="/assets/js/33.668a40d2.js"><link rel="prefetch" href="/assets/js/34.746f8d03.js"><link rel="prefetch" href="/assets/js/35.84de9a82.js"><link rel="prefetch" href="/assets/js/36.a243395d.js"><link rel="prefetch" href="/assets/js/37.a9ff6e8c.js"><link rel="prefetch" href="/assets/js/38.1c3e1cdf.js"><link rel="prefetch" href="/assets/js/39.718c02a7.js"><link rel="prefetch" href="/assets/js/4.21f7bc64.js"><link rel="prefetch" href="/assets/js/40.640dda28.js"><link rel="prefetch" href="/assets/js/41.b05559b1.js"><link rel="prefetch" href="/assets/js/42.32bc5efc.js"><link rel="prefetch" href="/assets/js/43.d6325d70.js"><link rel="prefetch" href="/assets/js/44.4897fa11.js"><link rel="prefetch" href="/assets/js/45.cc5207d2.js"><link rel="prefetch" href="/assets/js/46.ccff6404.js"><link rel="prefetch" href="/assets/js/5.e8e54c08.js"><link rel="prefetch" href="/assets/js/6.567c728a.js"><link rel="prefetch" href="/assets/js/7.efc9b48d.js"><link rel="prefetch" href="/assets/js/8.2d41cbc0.js"><link rel="prefetch" href="/assets/js/9.d52aa902.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.2fd78da2.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Giraffe's Blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/reading/" class="nav-link">阅读随笔</a></div><div class="nav-item"><a href="/tech/" class="nav-link router-link-active">技术思考</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/reading/" class="nav-link">阅读随笔</a></div><div class="nav-item"><a href="/tech/" class="nav-link router-link-active">技术思考</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="javascript-闭包"><a href="#javascript-闭包" aria-hidden="true" class="header-anchor">#</a> JavaScript 闭包</h1> <p>在JavaScript中， <code>闭包（closure）</code>一直是开发者们比较难以理解的概念， 当我们真正理解了JavaScript中关于
+<a href="/tech/js/js-context.html">执行上下文</a>
+的概念后，我们离理解闭包的设计机制就不远了。</p> <p>闭包与普通的函数区别在于，它绑定了相应的执行环境，JavaScript的闭包主要包括两个部分：</p> <ul><li>执行上下文的词法环境</li> <li>表达式</li></ul> <h2 id="原理"><a href="#原理" aria-hidden="true" class="header-anchor">#</a> 原理</h2> <p>关于闭包， 我想开发者最懵的就是，外部函数都执行完毕并返回了， 为什么内部函数还可以访问到外部函数中定义的变量呢？</p> <p>为了理清楚闭包的原理， 我们将闭包相关的执行上下文和作用域链梳理一下， 首先看一个简单的闭包示例：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">outterF</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token string">'outter variable'</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token function">innerF</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> callInnerF<span class="token operator">=</span> <span class="token function">outterF</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">callInnerF</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+</code></pre></div><p>程序加载运行后， 首先创建<code>全局执行上下文</code>并推入<code>执行栈</code>中。程序首先创建了一个函数<code>outterF</code>和一个变量<code>callInnerF</code>， 此时全局执行上下文所对应的词法环境如下（略去无关内容）：</p> <div class="language-js extra-class"><pre class="language-js"><code>globalLexicalEnvironment<span class="token punctuation">:</span> <span class="token punctuation">{</span> 
+    outerEnvironmentRef<span class="token punctuation">:</span><span class="token keyword">null</span><span class="token punctuation">,</span> 
+    environmentRecord<span class="token punctuation">:</span><span class="token punctuation">{</span>
+        <span class="token string">&quot;outterF&quot;</span><span class="token punctuation">:</span>outterF<span class="token punctuation">,</span>
+        <span class="token string">&quot;callInnerF&quot;</span><span class="token punctuation">:</span><span class="token keyword">undefined</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code></pre></div><p>接下来在<code>outterF()</code>函数执行时候， 则创建了对应的函数执行上下文并推入执行栈。
+它所对应的词法环境如下所示：</p> <div class="language-js extra-class"><pre class="language-js"><code>outterFLexicalEnvironment<span class="token punctuation">:</span> <span class="token punctuation">{</span> 
+    outterEnvironmentRef<span class="token punctuation">:</span>globalLexicalEnvironment<span class="token punctuation">,</span> 
+    environmentRecord<span class="token punctuation">:</span><span class="token punctuation">{</span>
+        <span class="token string">&quot;a&quot;</span><span class="token punctuation">:</span><span class="token string">'outter variable'</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;innerF&quot;</span><span class="token punctuation">:</span>innerF
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>此时<code>执行栈</code>的栈中包含了<code>outterFContext</code>和<code>globalContext</code>。
+每个执行上下文包含了对应的<code>词法环境</code>，函数<code>outterF</code>的词法环境的<code>outterEnvironmentRef</code>引用指向了外层的全局词法环境<code>globalLexicalEnvironment</code>。</p> <p>在<code>outterF</code>函数执行过程中创建了<code>innerF</code>函数对象，并作为函数的返回值。
+此时的<code>innerF</code>函数并未执行，只是被声明了出来, 函数对象的<code>[[Environment]]</code>属性指向了<code>innerF</code>函数定义时的词法环境：<code>outterFLexicalEnvironment</code></p> <div class="language-js extra-class"><pre class="language-js"><code>outterFLexicalEnvironment<span class="token punctuation">:</span> <span class="token punctuation">{</span> 
+    outterEnvironmentRef<span class="token punctuation">:</span>globalLexicalEnvironment<span class="token punctuation">,</span> 
+    environmentRecord<span class="token punctuation">:</span><span class="token punctuation">{</span>
+        <span class="token string">&quot;a&quot;</span><span class="token punctuation">:</span><span class="token string">'outter variable'</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;innerF&quot;</span><span class="token punctuation">:</span>innerF
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>当<code>outterF</code>执行完毕后， 函数执行上下文出栈并销毁。此时的执行栈中只有全局的执行上下文<code>globalContext</code>。</p> <p>虽然<code>outterF</code>函数的执行上下文被销毁，但是它所对应的词法环境<code>outterFLexicalEnvironment</code>却没有被销毁。
+因为在<code>innerF</code>函数对象的<code>[[Environment]]</code>属性保存着<code>innerF</code>函数定义时的词法环境——<code>outterFLexicalEnvironment</code>；</p> <p>这里就是理解闭包本身的关键所在。</p> <p><code>callInnerF</code>变量指向了<code>outterF</code>函数的返回值 ——<code>innerF</code>函数。因此， 当执行<code>callInnerF()</code>事实上就是调用执行<code>innerF</code>函数。
+当callInnerF函数执行，JavaScript引擎会为它创建对应的执行上下文和词法环境，并使用<code>innerF</code>函数的<code>[[Environment]]</code>属性初始化callInnerF函数的词法环境：</p> <div class="language-js extra-class"><pre class="language-js"><code>callInnerFLexicalEnvironment<span class="token punctuation">:</span> <span class="token punctuation">{</span> 
+    outterEnvironmentRef<span class="token punctuation">:</span>outterFLexicalEnvironment<span class="token punctuation">,</span> 
+    environmentRecord<span class="token punctuation">:</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><code>innerF</code>中执行打印a变量操作时， 会沿着<code>outterEnvironmentRef</code>形成的作用域链向外查找，并在<code>outterFLexicalEnvironment</code>所指向的environmentRecord中获取到<code>a</code>变量。</p> <p>这个过程解释了当<code>outterF</code>函数执行完毕，所对应的执行环境销毁，但由于所对应的变量对象还留在内存中， 我们仍然能够访问到它内部的变量<code>a</code>.</p> <p>当<code>innerF</code>函数执行完毕，它所对应的执行上下文和词法环境才会被销毁。</p> <h2 id="总结"><a href="#总结" aria-hidden="true" class="header-anchor">#</a> 总结</h2> <p>在上面的分析过程后，我们可以简单地理解了闭包的概念，闭包就是一个内部定义的函数可以访问它外部函数中定义的变量和参数， 即便它的外部函数已经执行完毕并返回了结果。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <div class="wrapper" data-v-5a084129><h5 data-v-5a084129></h5> <img src="/qrcode_self.jpg" data-v-5a084129></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.36f7a4d5.js" defer></script><script src="/assets/js/3.5e56f3a6.js" defer></script><script src="/assets/js/2.a56e4763.js" defer></script><script src="/assets/js/12.34e00da0.js" defer></script>
+  </body>
+</html>

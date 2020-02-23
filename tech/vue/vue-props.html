@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vue Props 应用与源码分析 | Giraffe&#39;s Blog</title>
+    <meta name="description" content=" ">
+    <link rel="icon short" href="/ico_avatar.ico" type="image/x-icon">
+    
+    <link rel="preload" href="/assets/css/0.styles.2fd78da2.css" as="style"><link rel="preload" href="/assets/js/app.36f7a4d5.js" as="script"><link rel="preload" href="/assets/js/3.5e56f3a6.js" as="script"><link rel="preload" href="/assets/js/2.a56e4763.js" as="script"><link rel="preload" href="/assets/js/31.314c8ce0.js" as="script"><link rel="prefetch" href="/assets/js/10.d856c855.js"><link rel="prefetch" href="/assets/js/11.171a332b.js"><link rel="prefetch" href="/assets/js/12.34e00da0.js"><link rel="prefetch" href="/assets/js/13.6a4bbdce.js"><link rel="prefetch" href="/assets/js/14.4eef22e3.js"><link rel="prefetch" href="/assets/js/15.80d8c8f1.js"><link rel="prefetch" href="/assets/js/16.408ca987.js"><link rel="prefetch" href="/assets/js/17.267749f1.js"><link rel="prefetch" href="/assets/js/18.be1ceda1.js"><link rel="prefetch" href="/assets/js/19.d6d6110b.js"><link rel="prefetch" href="/assets/js/20.c63fb21f.js"><link rel="prefetch" href="/assets/js/21.a8cdd90b.js"><link rel="prefetch" href="/assets/js/22.e6989c2d.js"><link rel="prefetch" href="/assets/js/23.6efb0d64.js"><link rel="prefetch" href="/assets/js/24.225dff0d.js"><link rel="prefetch" href="/assets/js/25.d6301564.js"><link rel="prefetch" href="/assets/js/26.48130fde.js"><link rel="prefetch" href="/assets/js/27.b4f579f9.js"><link rel="prefetch" href="/assets/js/28.d4af6c44.js"><link rel="prefetch" href="/assets/js/29.4dbe3fbe.js"><link rel="prefetch" href="/assets/js/30.d9c89cfb.js"><link rel="prefetch" href="/assets/js/32.9ec8b6ed.js"><link rel="prefetch" href="/assets/js/33.668a40d2.js"><link rel="prefetch" href="/assets/js/34.746f8d03.js"><link rel="prefetch" href="/assets/js/35.84de9a82.js"><link rel="prefetch" href="/assets/js/36.a243395d.js"><link rel="prefetch" href="/assets/js/37.a9ff6e8c.js"><link rel="prefetch" href="/assets/js/38.1c3e1cdf.js"><link rel="prefetch" href="/assets/js/39.718c02a7.js"><link rel="prefetch" href="/assets/js/4.21f7bc64.js"><link rel="prefetch" href="/assets/js/40.640dda28.js"><link rel="prefetch" href="/assets/js/41.b05559b1.js"><link rel="prefetch" href="/assets/js/42.32bc5efc.js"><link rel="prefetch" href="/assets/js/43.d6325d70.js"><link rel="prefetch" href="/assets/js/44.4897fa11.js"><link rel="prefetch" href="/assets/js/45.cc5207d2.js"><link rel="prefetch" href="/assets/js/46.ccff6404.js"><link rel="prefetch" href="/assets/js/5.e8e54c08.js"><link rel="prefetch" href="/assets/js/6.567c728a.js"><link rel="prefetch" href="/assets/js/7.efc9b48d.js"><link rel="prefetch" href="/assets/js/8.2d41cbc0.js"><link rel="prefetch" href="/assets/js/9.d52aa902.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.2fd78da2.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Giraffe's Blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/reading/" class="nav-link">阅读随笔</a></div><div class="nav-item"><a href="/tech/" class="nav-link router-link-active">技术思考</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/reading/" class="nav-link">阅读随笔</a></div><div class="nav-item"><a href="/tech/" class="nav-link router-link-active">技术思考</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="vue-props-应用与源码分析"><a href="#vue-props-应用与源码分析" aria-hidden="true" class="header-anchor">#</a> Vue Props 应用与源码分析</h1> <p>Vue组件的属性提供了父组件向子组件传递自身数据状态的途径，
+这里我们简单总结一下属性的使用方式和特性，以及背后的源码实现。</p> <h2 id="应用"><a href="#应用" aria-hidden="true" class="header-anchor">#</a> 应用</h2> <p>组件使用<code>Props</code>来接收外部所传递来的数据，通常可以分为三类：</p> <h4 id="_1-自定义属性：开发者在组件props字段中声明和定义的属性。"><a href="#_1-自定义属性：开发者在组件props字段中声明和定义的属性。" aria-hidden="true" class="header-anchor">#</a> 1. 自定义属性：开发者在组件props字段中声明和定义的属性。</h4> <p>在官方的示例中，列举了子组件具体可以声明的属性类型和校验方式：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code>Vue<span class="token punctuation">.</span><span class="token function">component</span><span class="token punctuation">(</span><span class="token string">'my-component'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  props<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)</span>
+    propA<span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+    <span class="token comment">// 多个可能的类型</span>
+    propB<span class="token punctuation">:</span> <span class="token punctuation">[</span>String<span class="token punctuation">,</span> Number<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token comment">// 必填的字符串</span>
+    propC<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      type<span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+      required<span class="token punctuation">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 带有默认值的数字</span>
+    propD<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      type<span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+      <span class="token keyword">default</span><span class="token punctuation">:</span> <span class="token number">100</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 带有默认值的对象</span>
+    propE<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      type<span class="token punctuation">:</span> Object<span class="token punctuation">,</span>
+      <span class="token comment">// 对象或数组(引用类型的)默认值必须从一个工厂函数获取</span>
+      <span class="token function-variable function">default</span><span class="token punctuation">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span> message<span class="token punctuation">:</span> <span class="token string">'hello'</span> <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 自定义验证函数</span>
+    propF<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      <span class="token function-variable function">validator</span><span class="token punctuation">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 这个值必须匹配下列字符串中的一个</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token string">'success'</span><span class="token punctuation">,</span> <span class="token string">'warning'</span><span class="token punctuation">,</span> <span class="token string">'danger'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token operator">-</span><span class="token number">1</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p><code>type</code>字段指定了属性所属类型的构造函数，可以包括以下几种原生类型：</p> <blockquote><p>String, Number, Boolean, Array, Object, Date, Function, Symbol</p></blockquote> <p>除了原生构造函数之外， 我们还可以自定义构造函数，来验证作为属性值的实例对象是否是通过该构造函数创建的。</p> <h4 id="_2-原生属性：也就是未在组件内部声明的属性，默认会自动挂载的组件根元素上-inheritattrs为false可以禁止自动挂载"><a href="#_2-原生属性：也就是未在组件内部声明的属性，默认会自动挂载的组件根元素上-inheritattrs为false可以禁止自动挂载" aria-hidden="true" class="header-anchor">#</a> 2. 原生属性：也就是未在组件内部声明的属性，默认会自动挂载的组件根元素上(inheritAttrs为false可以禁止自动挂载).</h4> <p>在一个组件内部显示声明的属性不仅定义了组件从外部接收数据的类型与格式，同时也确定了所接收数据在组件中的用途和处理方式.
+而对于那些无法预见到的业务场景和传入的数据信息， 组件选择默认挂载到根元素上。</p> <div class="tip custom-block"><p class="custom-block-title">TIP</p> <p>通过组件的<code>inheritAttrs</code>字段可以禁止这一特性， 同时结合组件实例的<code>attrs</code>属性，可以将原生属性指定挂载到固定的子元素上。</p></div> <h4 id="_3-特殊属性：例如class-style-ref-key等等，-挂载在组件根元素上"><a href="#_3-特殊属性：例如class-style-ref-key等等，-挂载在组件根元素上" aria-hidden="true" class="header-anchor">#</a> 3. 特殊属性：例如class,style, ref, key等等， 挂载在组件根元素上.</h4> <p>特殊属性其实也是非自定义属性的一种，这里单拿出来分类的原因是它与原生属性不太一样，其特殊性在于：
+<code>inheritAttrs</code>字段配置不会对特殊属性生效；另外，对于<code>class</code>，<code>style</code>等属性，组件外部传入的属性值与组件的内部定义的属性值会进行智能地合并；</p> <div class="tip custom-block"><p class="custom-block-title">Note</p> <p>由于HTML对于大小写不敏感，对于采用驼峰方式命名的自定义组件名称或属性名，在DOM中使用的时候需要采用<code>kebab-case</code>方式使用。</p></div> <h4 id="单向数据流"><a href="#单向数据流" aria-hidden="true" class="header-anchor">#</a> 单向数据流</h4> <p>在Vue的组件树结构中，父组件到子组件之间的数据流向是单向的：父组件可以通过Prop将数据传递给子组件，而不允许子组件内部去更改Prop<a href="https://vuejs.org/v2/guide/components-props.html#One-Way-Data-Flow" target="_blank" rel="noopener noreferrer">「One-Way Data Flow」<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>。</p> <p>之所以做出这样限制的原因在于，一个父组件中可能包含了多个子组件，这些子组件都通过Prop依赖了父组件中的数据。</p> <p>如果某一个子组件内部任意修改了Prop数据（不经过父组件的允许），也就是修改了父组件中的数据和状态，很可能对其他子组件造成影响。
+因此，更好的方式是通过事件将修改数据状态的请求抛出给父组件，由父组件修改自身的数据状态。</p> <div class="warning custom-block"><p>尽管修改引用类型的Prop时候Vue不会报错，但仍会引起父组件数据状态变化。</p></div> <h2 id="实现"><a href="#实现" aria-hidden="true" class="header-anchor">#</a> 实现</h2> <p>介绍了属性的使用姿势和特性，我们来具体看看Vue是如何实现属性的校验、单向数据流等机制的。</p> <h3 id="规范化"><a href="#规范化" aria-hidden="true" class="header-anchor">#</a> 规范化</h3> <p>像上面属性的应用中所介绍的那样，Vue组件支持了很多种定义属性的方式，包括默认值，校验函数等等。
+为了便于后续处理和操作，需要对各种语法使用进行兼容操作。</p> <p>这部分在<a href="https://github.com/vuejs/vue/blob/52719ccab8/src/core/util/options.js#L365" target="_blank" rel="noopener noreferrer">mergeOptions操作<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>的时候进行了处理。</p> <h3 id="初始化"><a href="#初始化" aria-hidden="true" class="header-anchor">#</a> 初始化</h3> <p>组件属性的初始化发生在组件生命周期<code>beforeCreated</code>之后，在<code>initProps</code>中执行：</p> <div class="language-JS extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">initProps</span> <span class="token punctuation">(</span><span class="token parameter">vm<span class="token punctuation">:</span> Component<span class="token punctuation">,</span> propsOptions<span class="token punctuation">:</span> Object</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> propsData <span class="token operator">=</span> vm<span class="token punctuation">.</span>$options<span class="token punctuation">.</span>propsData <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token keyword">const</span> props <span class="token operator">=</span> vm<span class="token punctuation">.</span>_props <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token comment">// 缓存属性的key到vm的_propKeys属性，方便后面的遍历操作</span>
+  <span class="token keyword">const</span> keys <span class="token operator">=</span> vm<span class="token punctuation">.</span>$options<span class="token punctuation">.</span>_propKeys <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token keyword">const</span> isRoot <span class="token operator">=</span> <span class="token operator">!</span>vm<span class="token punctuation">.</span>$parent
+  <span class="token comment">// root instance props should be converted</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isRoot<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">// 如果当前不是Vue的根实例，关闭掉数据依赖收集</span>
+    <span class="token function">toggleObserving</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">in</span> propsOptions<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">// 遍历属性对象</span>
+    keys<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    <span class="token comment">// 校验属性合法性，并返回属性值</span>
+    <span class="token keyword">const</span> value <span class="token operator">=</span> <span class="token function">validateProp</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> propsOptions<span class="token punctuation">,</span> propsData<span class="token punctuation">,</span> vm<span class="token punctuation">)</span>
+    <span class="token comment">/* istanbul ignore else */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 把驼峰转换为连字符</span>
+      <span class="token keyword">const</span> hyphenatedKey <span class="token operator">=</span> <span class="token function">hyphenate</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+      <span class="token comment">// 校验属性名是否为保留字</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isReservedAttribute</span><span class="token punctuation">(</span>hyphenatedKey<span class="token punctuation">)</span> <span class="token operator">||</span>
+          config<span class="token punctuation">.</span><span class="token function">isReservedAttr</span><span class="token punctuation">(</span>hyphenatedKey<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">warn</span><span class="token punctuation">(</span>
+          <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&quot;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>hyphenatedKey<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&quot; is a reserved attribute and cannot be used as component prop.</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+          vm
+        <span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+      <span class="token comment">// 响应式处理</span>
+      <span class="token function">defineReactive</span><span class="token punctuation">(</span>props<span class="token punctuation">,</span> key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>vm<span class="token punctuation">.</span>$parent <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>isUpdatingChildComponent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">warn</span><span class="token punctuation">(</span>
+            <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Avoid mutating a prop directly since the value will be </span><span class="token template-punctuation string">`</span></span> <span class="token operator">+</span>
+            <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">overwritten whenever the parent component re-renders. </span><span class="token template-punctuation string">`</span></span> <span class="token operator">+</span>
+            <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Instead, use a data or computed property based on the prop's </span><span class="token template-punctuation string">`</span></span> <span class="token operator">+</span>
+            <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">value. Prop being mutated: &quot;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>key<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&quot;</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+            vm
+          <span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token function">defineReactive</span><span class="token punctuation">(</span>props<span class="token punctuation">,</span> key<span class="token punctuation">,</span> value<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// static props are already proxied on the component's prototype</span>
+    <span class="token comment">// during Vue.extend(). We only need to proxy props defined at</span>
+    <span class="token comment">// instantiation here.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>key <span class="token keyword">in</span> vm<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">proxy</span><span class="token punctuation">(</span>vm<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">_props</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">toggleObserving</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>组件属性的初始化过程中，会校验了属性的合法性，除了用户在声明属性时的类型和校验函数，还会根据平台判断属性是否为保留的关键字。</p> <p>我们知道，子组件通过属性的方式依赖了父组件的数据状态，同时采用了单向数据流的设计，不允许子组件修改父组件的数据状态。
+为此，<code>defineReactive</code>在对于属性的响应式处理的时候，做了两个操作：</p> <ul><li>setter方法中，当子组件试图修改属性值的时候报警告提示：</li></ul> <div class="language-JS extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">reactiveSetter</span> <span class="token punctuation">(</span><span class="token parameter">newVal</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> value <span class="token operator">=</span> getter <span class="token operator">?</span> <span class="token function">getter</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span> <span class="token punctuation">:</span> val
+    <span class="token comment">/* eslint-disable no-self-compare */</span>
+  <span class="token operator">...</span>
+    <span class="token comment">/* eslint-enable no-self-compare */</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span> customSetter<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">customSetter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token operator">...</span>
+<span class="token punctuation">}</span>
+</code></pre></div><ul><li>只有当Vue实例为根组件实例的时候，才递归遍历属性对象，声明为响应式数据：</li></ul> <div class="language-JS extra-class"><pre class="language-js"><code>  <span class="token comment">// initProps</span>
+  <span class="token keyword">const</span> isRoot <span class="token operator">=</span> <span class="token operator">!</span>vm<span class="token punctuation">.</span>$parent
+  <span class="token comment">// root instance props should be converted</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isRoot<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">// 如果当前不是Vue的根实例，关闭掉数据依赖收集</span>
+    <span class="token function">toggleObserving</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token operator">...</span>
+  
+  <span class="token comment">// defineReactive</span>
+  <span class="token keyword">let</span> childOb <span class="token operator">=</span> <span class="token operator">!</span>shallow <span class="token operator">&amp;&amp;</span> <span class="token function">observe</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span>
+  Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> key<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    enumerable<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    configurable<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">get</span><span class="token punctuation">:</span> <span class="token keyword">function</span> <span class="token function">reactiveGetter</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> value <span class="token operator">=</span> getter <span class="token operator">?</span> <span class="token function">getter</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span> <span class="token punctuation">:</span> val
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>Dep<span class="token punctuation">.</span>target<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        dep<span class="token punctuation">.</span><span class="token function">depend</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>childOb<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          childOb<span class="token punctuation">.</span>dep<span class="token punctuation">.</span><span class="token function">depend</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">dependArray</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">return</span> value
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>关于响应式数据的声明，更多具体内容见<a href="/tech/vue/vue-reactivity">「Vue 响应式系统的原理」</a>。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <div class="wrapper" data-v-5a084129><h5 data-v-5a084129></h5> <img src="/qrcode_self.jpg" data-v-5a084129></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.36f7a4d5.js" defer></script><script src="/assets/js/3.5e56f3a6.js" defer></script><script src="/assets/js/2.a56e4763.js" defer></script><script src="/assets/js/31.314c8ce0.js" defer></script>
+  </body>
+</html>
